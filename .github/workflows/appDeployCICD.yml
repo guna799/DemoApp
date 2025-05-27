@@ -37,7 +37,11 @@ jobs:
     - name: Decode Google Play JSON
       run: |
         echo "${{ secrets.GOOGLE_PLAY_JSON_KEY }}" | base64 --decode > android/fastlane/fastlane-android-service-account.json
-
+    - name: Check JSON file
+      run: |
+        echo "First few lines of the decoded JSON:"
+        head -n 5 android/fastlane/fastlane-android-service-account.json
+    
     - name: Setup Ruby and Bundler
       uses: ruby/setup-ruby@v1
       with:
