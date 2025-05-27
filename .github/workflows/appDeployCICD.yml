@@ -2,6 +2,7 @@ name: Android CI/CD
 
 on:
   push:
+    workflow_dispatch:
     branches: [main]
 
 jobs:
