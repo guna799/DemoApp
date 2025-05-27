@@ -1,7 +1,7 @@
 default_platform(:android)
 
 platform :android do
-  desc "Upload to Google Play Internal track as draft"
+  desc "Build and upload to the Google Play Internal track as a draft"
   lane :internal do
     gradle(
       task: "bundle",
@@ -11,13 +11,13 @@ platform :android do
     upload_to_play_store(
       track: 'internal',
       aab: 'app/build/outputs/bundle/release/app-release.aab',
-      release_status: 'draft',
+      release_status: 'draft', # Keeps the release unpublished
       json_key: 'fastlane/fastlane-android-service-account.json',
-      package_name: 'com.test.dempapp'
+      package_name: 'com.test.demoapp'
     )
   end
 
-  desc "Promote build to Beta track"
+  desc "Build and upload to the Google Play Beta track as a draft"
   lane :beta do
     gradle(
       task: "bundle",
@@ -27,13 +27,13 @@ platform :android do
     upload_to_play_store(
       track: 'beta',
       aab: 'app/build/outputs/bundle/release/app-release.aab',
-      release_status: 'draft',
+      release_status: 'draft', # Change to 'completed' to auto-publish
       json_key: 'fastlane/fastlane-android-service-account.json',
       package_name: 'com.test.demoapp'
     )
   end
 
-  desc "Promote build to Production"
+  desc "Build and release to the Production track"
   lane :production do
     gradle(
       task: "bundle",
@@ -43,7 +43,7 @@ platform :android do
     upload_to_play_store(
       track: 'production',
       aab: 'app/build/outputs/bundle/release/app-release.aab',
-      release_status: 'completed',
+      release_status: 'completed', # This will publish the release
       json_key: 'fastlane/fastlane-android-service-account.json',
       package_name: 'com.test.demoapp'
     )
