@@ -23,6 +23,14 @@ jobs:
         distribution: 'temurin'
         java-version: '17'
 
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 18
+
+    - name: Install JS dependencies
+      run: npm install
+
     - name: Decode and setup keystore
       run: |
         echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > android/app/demoapp-key.keystore
@@ -36,12 +44,12 @@ jobs:
       with:
         ruby-version: 3.1
 
-    - name: Install dependencies
+    - name: Install Fastlane dependencies
       run: |
         cd android
         bundle install
 
-    - name: Run Fastlane
+    - name: Run Fastlane lane
       run: |
         cd android
         bundle exec fastlane beta
