@@ -1,0 +1,47 @@
+name: Android CI/CD
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    env:
+      KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+      KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+      KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up JDK
+      uses: actions/setup-java@v3
+      with:
+        distribution: 'temurin'
+        java-version: '17'
+
+    - name: Decode and setup keystore
+      run: |
+        echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > android/app/demoapp-key.keystore
+
+    - name: Decode Google Play JSON
+      run: |
+        echo "${{ secrets.GOOGLE_PLAY_JSON_KEY }}" | base64 --decode > android/fastlane/fastlane-android-service-account.json
+
+    - name: Setup Ruby and Bundler
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: 3.1
+
+    - name: Install dependencies
+      run: |
+        cd android
+        bundle install
+
+    - name: Run Fastlane
+      run: |
+        cd android
+        bundle exec fastlane beta
