@@ -13,7 +13,7 @@ platform :android do
       aab: 'app/build/outputs/bundle/release/app-release.aab',
       release_status: 'draft',
       json_key: 'fastlane/fastlane-android-service-account.json',
-      package_name: 'com.yourcompany.demoapp' # <-- Replace with your actual package name
+      package_name: 'com.test.dempapp'
     )
   end
 
@@ -29,7 +29,7 @@ platform :android do
       aab: 'app/build/outputs/bundle/release/app-release.aab',
       release_status: 'draft',
       json_key: 'fastlane/fastlane-android-service-account.json',
-      package_name: 'com.yourcompany.demoapp'
+      package_name: 'com.test.demoapp'
     )
   end
 
@@ -43,9 +43,9 @@ platform :android do
     upload_to_play_store(
       track: 'production',
       aab: 'app/build/outputs/bundle/release/app-release.aab',
-      release_status: 'completed', # Or 'draft'/'inProgress' based on release phase
+      release_status: 'completed',
       json_key: 'fastlane/fastlane-android-service-account.json',
-      package_name: 'com.yourcompany.demoapp'
+      package_name: 'com.test.demoapp'
     )
   end
 end
